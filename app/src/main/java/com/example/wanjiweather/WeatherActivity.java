@@ -1,5 +1,6 @@
 package com.example.wanjiweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.wanjiweather.gson.Forecast;
 import com.example.wanjiweather.gson.Weather;
+import com.example.wanjiweather.service.AutoUpdateService;
 import com.example.wanjiweather.util.HttpUtil;
 import com.example.wanjiweather.util.Utility;
 
@@ -212,14 +214,16 @@ public class WeatherActivity extends AppCompatActivity {
             maxText.setText(forecast.temperature.max);
             minText.setText(forecast.temperature.min);
             forecastLayout.addView(view);
+            Intent intent = new Intent(this, AutoUpdateService.class);
+            startService(intent);
         }
         if (weather.aqi != null) {
             aqiText.setText(weather.aqi.city.aqi);
             pm25Text.setText(weather.aqi.city.pm25);
         }
-        String comfort = "舒适度:"+ weather.suggestion.comfort.info;
-        String carWash = "洗车指数:"+ weather.suggestion.carWash.info;
-        String sport = "运动建议:"+ weather.suggestion.sport.info;
+        String comfort = "舒适度 :"+ weather.suggestion.comfort.info;
+        String carWash = "洗车指数 :"+ weather.suggestion.carWash.info;
+        String sport = "运动建议 :"+ weather.suggestion.sport.info;
         comfortText.setText(comfort);
         carwashText.setText(carWash);
         sportText.setText(sport);
